@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext'; // Assuming you have this
 import styles from './ProductDetails.module.css';
 
 export default function ProductDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { addItemToCart } = useCart();
 
   useEffect(() => {
     axios.get(`https://dummyjson.com/products/${id}`)
@@ -15,7 +19,7 @@ export default function ProductDetails() {
         setProduct(res.data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch(() => {
         setError('Failed to load product details');
         setLoading(false);
       });
@@ -24,6 +28,27 @@ export default function ProductDetails() {
   if (loading) return <p className={styles.loading}>Loading product details...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
   if (!product) return <p className={styles.error}>Product not found</p>;
+
+  const handleAddToCart = () => {
+    addItemToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      thumbnail: product.thumbnail,
+    });
+    alert('Added to cart!');
+  };
+
+  const handleBuyNow = () => {
+    addItemToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      thumbnail: product.thumbnail,
+    });
+    // Redirect to cart or checkout page
+    navigate('/cart');
+  };
 
   return (
     <div className={styles.container}>
@@ -43,7 +68,15 @@ export default function ProductDetails() {
           <p><strong>Brand:</strong> {product.brand}</p>
           <p><strong>Category:</strong> {product.category}</p>
           <p className={styles.description}>{product.description}</p>
-          <button className={styles.addToCartBtn}>Add to Cart</button>
+
+          <div className={styles.buttonGroup}>
+            <button onClick={handleAddToCart} className={styles.addToCartBtn}>
+              Add to Cart
+            </button>
+            <button onClick={handleBuyNow} className={styles.buyNowBtn}>
+              Buy Now
+            </button>
+          </div>
         </div>
       </div>
     </div>

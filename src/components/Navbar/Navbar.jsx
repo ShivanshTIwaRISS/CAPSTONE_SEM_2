@@ -1,8 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
+  const { totalItems } = useCart();
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
@@ -25,6 +28,12 @@ export default function Navbar() {
           >
             Products
           </NavLink>
+        </li>
+        <li>
+          <Link to="/cart" className={styles.cartLink} aria-label="Shopping Cart">
+            🛒
+            {totalItems > 0 && <span className={styles.cartCount}>{totalItems}</span>}
+          </Link>
         </li>
       </ul>
     </nav>
