@@ -31,8 +31,18 @@ export default function Navbar() {
         </li>
         <li>
           <Link to="/cart" className={styles.cartLink} aria-label="Shopping Cart">
-            🛒
+            <span role="img" aria-label="shopping cart" style={{ fontSize: '1.5rem' }}>
+              🛒
+            </span>
             {totalItems > 0 && <span className={styles.cartCount}>{totalItems}</span>}
+          </Link>
+        </li>
+        {/* Login Icon */}
+        <li>
+          <Link to="/login" className={styles.loginLink} aria-label="Login">
+            <span role="img" aria-label="login" style={{ fontSize: '1.5rem' }}>
+              🔐
+            </span>
           </Link>
         </li>
       </ul>
