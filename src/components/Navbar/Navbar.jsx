@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <NavLink to="/" className={styles.brand}>MyStore</NavLink>
+        <NavLink to="/" className={styles.brand}>OS</NavLink>
       </div>
       <ul className={styles.navLinks}>
         <li>
@@ -37,7 +37,6 @@ export default function Navbar() {
             {totalItems > 0 && <span className={styles.cartCount}>{totalItems}</span>}
           </Link>
         </li>
-        {/* Login Icon */}
         <li>
           <Link to="/login" className={styles.loginLink} aria-label="Login">
             <span role="img" aria-label="login" style={{ fontSize: '1.5rem' }}>

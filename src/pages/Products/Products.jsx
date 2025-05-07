@@ -5,7 +5,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState(() => {
-    // Load wishlist from localStorage or start empty
+
     const saved = localStorage.getItem('wishlist');
     return saved ? JSON.parse(saved) : [];
   });
@@ -13,7 +13,7 @@ export default function Products() {
   useEffect(() => {
     axios.get('https://dummyjson.com/products')
       .then(res => {
-        // Add isInWishlist flag to each product based on wishlist state
+
         const updatedProducts = res.data.products.map(product => ({
           ...product,
           isInWishlist: wishlist.includes(product.id),
@@ -23,7 +23,7 @@ export default function Products() {
       .catch(console.error);
   }, [wishlist]);
 
-  // Toggle wishlist status of a product
+
   const handleWishlistToggle = (productId) => {
     setWishlist(prev => {
       let updated;
@@ -32,7 +32,7 @@ export default function Products() {
       } else {
         updated = [...prev, productId];
       }
-      localStorage.setItem('wishlist', JSON.stringify(updated)); // persist wishlist
+      localStorage.setItem('wishlist', JSON.stringify(updated)); 
       return updated;
     });
   };
@@ -40,11 +40,13 @@ export default function Products() {
   return (
     <div style={{ padding: '20px' }}>
       <h1>Our Products</h1>
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-        gap: '20px'
-      }}>
+      <div className="product-grid"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gap: '20px',
+        }}
+      > 
         {products.map(product => (
           <ProductCard 
             key={product.id} 

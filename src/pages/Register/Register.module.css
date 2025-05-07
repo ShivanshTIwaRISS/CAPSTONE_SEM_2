@@ -66,7 +66,7 @@
     text-decoration: underline;
   }
   
-  /* Success animation container */
+
   .successContainer {
     max-width: 400px;
     margin: 100px auto;
@@ -81,7 +81,7 @@
     position: relative;
   }
   
-  /* Simple checkmark animation */
+
   .checkmark {
     font-size: 4rem;
     color: #28a745;

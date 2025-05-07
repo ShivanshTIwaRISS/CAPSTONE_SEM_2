@@ -46,7 +46,7 @@ export default function ProductDetails() {
       price: product.price,
       thumbnail: product.thumbnail,
     });
-    // Redirect to cart or checkout page
+
     navigate('/cart');
   };
 

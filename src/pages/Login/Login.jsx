@@ -17,10 +17,10 @@ export default function Login() {
       return;
     }
 
-    // Simulated login check (replace with real authentication)
+
     if (email === 'user@example.com' && password === 'password123') {
       localStorage.setItem('user', JSON.stringify({ email }));
-      navigate('/'); // Redirect to home after login
+      navigate('/'); 
     } else {
       setError('Invalid email or password.');
     }
@@ -54,7 +54,6 @@ export default function Login() {
 
         <button type="submit" className={styles.loginButton}>Login</button>
 
-        {/* Register link */}
         <p className={styles.registerPrompt}>
           Don't have an account? <Link to="/register" className={styles.registerLink}>Register here</Link>
         </p>

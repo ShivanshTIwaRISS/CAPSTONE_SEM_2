@@ -4,8 +4,8 @@ import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product, onWishlistToggle }) {
   const handleWishlistClick = (e) => {
-    e.preventDefault(); // Prevent navigation
-    e.stopPropagation(); // Stop bubbling to Link
+    e.preventDefault(); 
+    e.stopPropagation();
     onWishlistToggle(product.id);
   };
 

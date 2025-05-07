@@ -64,7 +64,6 @@ export default function Cart() {
         <p>Total Items: <strong>{totalItems}</strong></p>
         <p>Total Price: <strong>${totalPrice.toFixed(2)}</strong></p>
         <button onClick={clearCart} className={styles.clearBtn}>Clear Cart</button>
-        {/* You can add a checkout button here */}
       </div>
     </div>
   );

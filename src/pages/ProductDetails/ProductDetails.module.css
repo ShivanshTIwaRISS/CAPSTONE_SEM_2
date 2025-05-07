@@ -59,14 +59,12 @@
     color: #444;
   }
   
-  /* Buttons container */
   .buttonGroup {
     margin-top: 25px;
     display: flex;
     gap: 15px;
   }
   
-  /* Add to Cart button */
   .addToCartBtn {
     flex: 1;
     padding: 12px 0;

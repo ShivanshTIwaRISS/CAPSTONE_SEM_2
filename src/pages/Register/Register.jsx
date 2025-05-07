@@ -22,13 +22,13 @@ export default function Register() {
       return;
     }
 
-    // Simulate registration success
+
     localStorage.setItem('user', JSON.stringify({ email }));
 
-    // Show success animation/message
+
     setSuccess(true);
 
-    // After 2 seconds, redirect to login
+
     setTimeout(() => {
       navigate('/login');
     }, 2000);
