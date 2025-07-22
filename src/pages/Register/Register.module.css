@@ -1,102 +1,127 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.logo img {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
 .container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-  
-  input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .registerButton {
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .registerButton:hover {
-    background-color: #218838;
-  }
-  
-  .error {
-    color: red;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  
-  .loginLink {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  
-  .loginLink a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .loginLink a:hover {
-    text-decoration: underline;
-  }
-  
+  width: 350px;
+  padding: 20px 26px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
 
-  .successContainer {
-    max-width: 400px;
-    margin: 100px auto;
-    text-align: center;
-    padding: 30px;
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
-    border-radius: 8px;
-    color: #155724;
-    font-weight: 600;
-    font-size: 1.2rem;
-    position: relative;
-  }
-  
+.form {
+  display: flex;
+  flex-direction: column;
+}
 
-  .checkmark {
-    font-size: 4rem;
-    color: #28a745;
-    animation: pop 0.5s ease forwards;
-    margin-bottom: 15px;
+h2 {
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #a6a6a6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.registerButton {
+  padding: 10px;
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.registerButton:hover {
+  background-color: #e2b33c;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.conditions {
+  font-size: 12px;
+  margin-top: 15px;
+  color: #555;
+}
+
+.conditions a {
+  color: #0066c0;
+  text-decoration: none;
+}
+
+.conditions a:hover {
+  text-decoration: underline;
+}
+
+.loginLink {
+  margin-top: 15px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.loginLink a {
+  color: #0066c0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
+}
+
+.successPage {
+  max-width: 400px;
+  margin: 100px auto;
+  text-align: center;
+  padding: 30px;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  color: #155724;
+  font-weight: 600;
+  font-size: 1.2rem;
+  position: relative;
+}
+
+.checkmark {
+  font-size: 4rem;
+  color: #28a745;
+  animation: pop 0.5s ease forwards;
+  margin-bottom: 15px;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
-  
-  @keyframes pop {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
-  
+}

@@ -1,69 +1,117 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.logo img {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
 .container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-  
-  input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .loginButton {
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .loginButton:hover {
-    background-color: #0056b3;
-  }
-  
-  .error {
-    color: red;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  .registerPrompt {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  .registerLink {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  .registerLink:hover {
-    text-decoration: underline;
-  }
-  
+  width: 350px;
+  padding: 20px 26px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #a6a6a6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.loginButton {
+  padding: 10px;
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.loginButton:hover {
+  background-color: #e2b33c;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.conditions {
+  font-size: 12px;
+  margin-top: 15px;
+  color: #555;
+}
+
+.conditions a {
+  color: #0066c0;
+  text-decoration: none;
+}
+
+.conditions a:hover {
+  text-decoration: underline;
+}
+
+.help {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.help a {
+  color: #0066c0;
+  text-decoration: none;
+}
+
+.help a:hover {
+  text-decoration: underline;
+}
+
+.newToAmazon {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.createAccountButton {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px;
+  width: 350px;
+  text-align: center;
+  background-color: #e7e9ec;
+  border: 1px solid #adb1b8;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+}
+
+.createAccountButton:hover {
+  background-color: #d6d8db;
+}

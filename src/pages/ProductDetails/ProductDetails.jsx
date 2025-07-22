@@ -11,7 +11,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { addItemToCart } = useCart();
+  const { addItemToCart, clearCart } = useCart();
 
   useEffect(() => {
     axios.get(`https://dummyjson.com/products/${id}`)
@@ -40,14 +40,14 @@ export default function ProductDetails() {
   };
 
   const handleBuyNow = () => {
+    clearCart(); // clear previous items (like Amazon behavior)
     addItemToCart({
       id: product.id,
       title: product.title,
       price: product.price,
       thumbnail: product.thumbnail,
     });
-
-    navigate('/cart');
+    navigate('/checkout');
   };
 
   return (
@@ -61,14 +61,20 @@ export default function ProductDetails() {
             className={styles.productImage} 
           />
         </div>
+
         <div className={styles.info}>
           <h1>{product.title}</h1>
           <p className={styles.price}>${product.price}</p>
-          <p className={styles.rating}>Rating: {product.rating} / 5</p>
+          <p className={styles.rating}>⭐ {product.rating} / 5</p>
           <p><strong>Brand:</strong> {product.brand}</p>
           <p><strong>Category:</strong> {product.category}</p>
           <p className={styles.description}>{product.description}</p>
 
+          <p className={styles.inStock}>In stock</p>
+          <p className={styles.delivery}>Get it by <strong>Tuesday, June 18</strong></p>
+          <p className={styles.returnPolicy}>10-day Returnable</p>
+          <p className={styles.seller}>Sold by: <strong>OS. Ltd.</strong></p>
+          <p className={styles.secure}>Secure transaction</p>
           <div className={styles.buttonGroup}>
             <button onClick={handleAddToCart} className={styles.addToCartBtn}>
               Add to Cart

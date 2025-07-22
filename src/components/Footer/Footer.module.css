@@ -1,9 +1,67 @@
 .footer {
-    background-color: #282c34;
-    color: #bbb;
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
-    font-size: 0.9rem;
-  }
-  
+  background-color: #232f3e;
+  color: #ddd;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+  padding-top: 20px;
+}
+
+.backToTop {
+  text-align: center;
+  background-color: #37475a;
+  color: white;
+  padding: 15px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.backToTop:hover {
+  background-color: #485769;
+}
+
+.linkSection {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-bottom: 1px solid #3a4553;
+}
+
+.linkSection div {
+  flex: 1 1 200px;
+  margin: 10px 20px;
+}
+
+.linkSection h4 {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.linkSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linkSection li {
+  margin: 8px 0;
+  font-size: 0.9rem;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.linkSection li:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.bottomBar {
+  background-color: #131a22;
+  color: #bbb;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 0.85rem;
+}

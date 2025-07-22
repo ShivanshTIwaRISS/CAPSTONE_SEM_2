@@ -17,47 +17,58 @@ export default function Login() {
       return;
     }
 
-
     if (email === 'user@example.com' && password === 'password123') {
       localStorage.setItem('user', JSON.stringify({ email }));
-      navigate('/'); 
+      navigate('/');
     } else {
       setError('Invalid email or password.');
     }
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Login</h2>
-        {error && <p className={styles.error}>{error}</p>}
+    <div className={styles.page}>
+      <div className={styles.logo}>
+        {/* Replace this src with your actual logo file if local */}
+        <img src="/image.png" alt="OS Logo" />
+      </div>
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-        />
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <h2>Sign in</h2>
+          {error && <p className={styles.error}>{error}</p>}
 
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter your password"
-          required
-        />
+          <label htmlFor="email">Email or mobile phone number</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit" className={styles.loginButton}>Login</button>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <p className={styles.registerPrompt}>
-          Don't have an account? <Link to="/register" className={styles.registerLink}>Register here</Link>
-        </p>
-      </form>
+          <button type="submit" className={styles.loginButton}>Continue</button>
+
+          <p className={styles.conditions}>
+            By continuing, you agree to OS’s <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+          </p>
+
+          <p className={styles.help}><a href="#">Need help?</a></p>
+        </form>
+      </div>
+
+      <div className={styles.newToAmazon}>
+        <span>New to OS?</span>
+        <Link to="/register" className={styles.createAccountButton}>Create your OS account</Link>
+      </div>
     </div>
   );
 }

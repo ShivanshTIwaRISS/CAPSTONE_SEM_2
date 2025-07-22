@@ -1,18 +1,22 @@
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px 20px;
+  background-color: #e3e6e6;
 }
 
+/* --------- Hero Section --------- */
 .hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1350&q=80');
+  background-image: url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1400&q=80');
   background-size: cover;
   background-position: center;
-  color: white;
+  background-blend-mode: multiply;
+  color: #111;
   padding: 100px 20px;
   text-align: center;
-  border-radius: 8px;
-  margin-bottom: 40px;
+  border-radius: 12px;
+  margin-bottom: 60px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .heroContent {
@@ -21,70 +25,143 @@
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: white;
 }
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  color: white;
 }
 
 .ctaButton {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 30px;
-  border-radius: 4px;
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  color: #111;
+  padding: 14px 34px;
+  font-size: 1rem;
   font-weight: 600;
+  border-radius: 6px;
   text-decoration: none;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .ctaButton:hover {
-  background-color: #0056b3;
+  background-color: #e2b33b;
 }
 
+/* --------- Category Filters --------- */
+.categoryFilters {
+  margin-bottom: 40px;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.categoryScroll {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.categoryButton {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.categoryButton:hover {
+  background-color: #f0c14b;
+}
+
+.active {
+  background-color: #ffa41c;
+  color: #fff;
+  border-color: #ffa41c;
+}
+
+/* --------- Featured Section --------- */
 .featuredSection {
-  margin: 50px 0;
+  margin: 60px 0;
 }
 
 .featuredSection h2 {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
+  font-size: 2.2rem;
+  margin-bottom: 35px;
+  font-weight: 700;
+  color: #111;
 }
 
 .productsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
 }
 
 .loading {
   text-align: center;
-  color: #6c757d;
+  color: #666;
+  font-size: 1.1rem;
 }
 
 .error {
   text-align: center;
-  color: red;
+  color: #d9534f;
+  font-size: 1.1rem;
 }
 
+/* --------- CTA Section --------- */
 .ctaSection {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 60px;
+  padding: 60px 20px;
+  background-color: #232f3e;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.ctaSection h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .secondaryButton {
-  background-color: #6c757d;
-  color: white;
+  background-color: #f0c14b;
+  border: 1px solid #a88734;
+  color: #111;
   padding: 12px 30px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
   text-decoration: none;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .secondaryButton:hover {
-  background-color: #5a6268;
+  background-color: #e2b33b;
+}
+
+/* --------- Responsive --------- */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .ctaSection h2 {
+    font-size: 1.5rem;
+  }
 }

@@ -10,6 +10,7 @@ import ProductDetails from './pages/ProductDetails/ProductDetails';
 import Cart from './pages/Cart/Cart'; 
 import { CartProvider } from './context/CartContext';
 import './App.css'; 
+import Checkout from './pages/Checkout/Checkout';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </main>
           <Footer />

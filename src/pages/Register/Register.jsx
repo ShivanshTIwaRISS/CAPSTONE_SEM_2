@@ -13,21 +13,19 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
+
     if (!email || !password || !confirmPassword) {
       setError('Please fill in all fields.');
       return;
     }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
 
-
     localStorage.setItem('user', JSON.stringify({ email }));
-
-
     setSuccess(true);
-
 
     setTimeout(() => {
       navigate('/login');
@@ -36,7 +34,7 @@ export default function Register() {
 
   if (success) {
     return (
-      <div className={styles.successContainer}>
+      <div className={styles.successPage}>
         <div className={styles.checkmark}>✓</div>
         <h2>Registration Successful!</h2>
         <p>Redirecting to login...</p>
@@ -45,47 +43,55 @@ export default function Register() {
   }
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Register</h2>
-        {error && <p className={styles.error}>{error}</p>}
+    <div className={styles.page}>
+      <div className={styles.logo}>
+        <img src="/image.png" alt="OS Logo" />
+      </div>
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-        />
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <h2>Create account</h2>
+          {error && <p className={styles.error}>{error}</p>}
 
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Enter your password"
-          required
-        />
+          <label htmlFor="email">Your email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
 
-        <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
-          placeholder="Confirm your password"
-          required
-        />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            placeholder="At least 6 characters"
+          />
 
-        <button type="submit" className={styles.registerButton}>Register</button>
+          <label htmlFor="confirmPassword">Re-enter password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            required
+          />
 
-        <p className={styles.loginLink}>
-          Already have an account? <Link to="/login">Login here</Link>
-        </p>
-      </form>
+          <button type="submit" className={styles.registerButton}>Create your OS account</button>
+
+          <p className={styles.conditions}>
+            By creating an account, you agree to OS’s <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+          </p>
+
+          <p className={styles.loginLink}>
+            Already have an account? <Link to="/login">Sign in</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }
