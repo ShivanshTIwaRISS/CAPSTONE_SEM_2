@@ -1,20 +1,72 @@
-import React, { useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useCart } from '../../context/CartContext';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const { totalItems } = useCart();
   const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
+  // Debounced fetch of up to 2 suggestions
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const handle = setTimeout(() => {
+      axios
+        .get(
+          `https://dummyjson.com/products/search?q=${encodeURIComponent(
+            searchTerm.trim()
+          )}&limit=2`
+        )
+        .then(res => {
+          setSuggestions(res.data.products || []);
+          setShowDropdown(true);
+        })
+        .catch(() => {
+          setSuggestions([]);
+        });
+    }, 300);
+
+    return () => clearTimeout(handle);
+  }, [searchTerm]);
+
+  // When user selects a suggestion
+  const handleSuggestionClick = (term) => {
+    setSearchTerm('');
+    setSuggestions([]);
+    setShowDropdown(false);
+    navigate(`/products?search=${encodeURIComponent(term)}`);
+  };
+
+  // Full search on form submit
   const handleSearch = e => {
     e.preventDefault();
     if (searchTerm.trim()) {
+      setShowDropdown(false);
+      setSuggestions([]);
       navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm('');
     }
   };
+
+  // Close dropdown if clicking outside
+  useEffect(() => {
+    const onClickOutside = e => {
+      if (inputRef.current && !inputRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
 
   return (
     <nav className={styles.navbar}>
@@ -24,15 +76,31 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <form className={styles.searchBar} onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search OS store..."
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-        <button type="submit">🔍</button>
-      </form>
+      <div className={styles.searchWrapper} ref={inputRef}>
+        <form className={styles.searchBar} onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search OS store..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            onFocus={() => searchTerm && setShowDropdown(true)}
+          />
+          <button type="submit">🔍</button>
+        </form>
+
+        {showDropdown && suggestions.length > 0 && (
+          <ul className={styles.suggestionsDropdown}>
+            {suggestions.map(prod => (
+              <li
+                key={prod.id}
+                onMouseDown={() => handleSuggestionClick(prod.title)}
+              >
+                {prod.title}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <div className={styles.rightSection}>
         <div className={styles.navOption}>

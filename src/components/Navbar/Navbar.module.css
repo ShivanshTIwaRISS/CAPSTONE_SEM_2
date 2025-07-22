@@ -99,3 +99,65 @@
   margin-left: 6px;
   font-size: 0.85rem;
 }
+/* wrap the form + dropdown for positioning */
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  margin: 0 20px;
+  max-width: 700px;
+}
+
+/* existing styles, tweaked for alignment */
+.searchBar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.searchBar input {
+  flex: 1;
+  padding: 0 10px;
+  height: 100%;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.searchBar button {
+  height: 100%;
+  padding: 0 16px;
+  background-color: #febd69;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* new dropdown */
+.suggestionsDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #131921;
+  border: 1px solid #ddd;
+  border-top: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 200;
+}
+
+.suggestionsDropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestionsDropdown li:hover {
+  background-color: #0e0d0d;
+}

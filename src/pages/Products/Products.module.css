@@ -136,3 +136,58 @@ h1 {
     transform: rotate(360deg);
   }
 }
+.pageButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pageButton {
+  padding: 6px 12px;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.pageButton:hover {
+  background-color: #ccc;
+}
+
+.activePage {
+  background-color: #333;
+  color: white;
+}
+.pageButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.pageButton {
+  padding: 6px 12px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.pageButton:hover {
+  background-color: #ccc;
+}
+
+.activePage {
+  background-color: #333;
+  color: white;
+}
+
+.paginationWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}

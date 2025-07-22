@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -7,34 +7,33 @@ import styles from './Products.module.css';
 export default function Products() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const initialSearchTerm = queryParams.get('search') || '';
-
+  const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState(() => {
     const saved = localStorage.getItem('wishlist');
     return saved ? JSON.parse(saved) : [];
   });
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
   const [sortKey, setSortKey] = useState('');
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const observer = useRef();
+
+  const PRODUCTS_PER_PAGE = 20;
+
+  useEffect(() => {
+    const term = queryParams.get('search') || '';
+    setSearchTerm(term);
+  }, [location.search]);
 
   const fetchProducts = useCallback(() => {
-    let url = `https://dummyjson.com/products?limit=20&skip=${(page - 1) * 20}`;
+    let url = `https://dummyjson.com/products?limit=${PRODUCTS_PER_PAGE}&skip=${(page - 1) * PRODUCTS_PER_PAGE}`;
     if (searchTerm.trim()) {
-      url = `https://dummyjson.com/products/search?q=${searchTerm}&limit=20&skip=${(page - 1) * 20}`;
+      url = `https://dummyjson.com/products/search?q=${encodeURIComponent(searchTerm)}&limit=${PRODUCTS_PER_PAGE}&skip=${(page - 1) * PRODUCTS_PER_PAGE}`;
     }
 
     axios.get(url).then(res => {
       const fetched = res.data.products || [];
-
-      if (fetched.length === 0) {
-        setHasMore(false);
-        return;
-      }
-
       let sorted = [...fetched];
+
       if (sortKey === 'price') {
         sorted.sort((a, b) => a.price - b.price);
       } else if (sortKey === 'rating') {
@@ -46,34 +45,19 @@ export default function Products() {
         isInWishlist: wishlist.includes(product.id),
       }));
 
-      setProducts(prev => [...prev, ...updated]);
+      setProducts(updated);
+      const total = res.data.total || 0;
+      setTotalPages(Math.ceil(total / PRODUCTS_PER_PAGE));
     });
   }, [page, searchTerm, sortKey, wishlist]);
 
   useEffect(() => {
-    setProducts([]);
-    setPage(1);
-    setHasMore(true);
+    setPage(1); // Reset to page 1 when search or sort changes
   }, [searchTerm, sortKey]);
 
   useEffect(() => {
-    if (hasMore) {
-      fetchProducts();
-    }
-  }, [fetchProducts, hasMore]);
-
-  const lastProductRef = useCallback(
-    node => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage(prev => prev + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [hasMore]
-  );
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleSortChange = e => {
     setSortKey(e.target.value);
@@ -90,6 +74,48 @@ export default function Products() {
       localStorage.setItem('wishlist', JSON.stringify(updated));
       return updated;
     });
+  };
+
+  const renderPaginationButtons = () => {
+    const maxVisibleButtons = 5;
+    const half = Math.floor(maxVisibleButtons / 2);
+    let startPage = Math.max(1, page - half);
+    let endPage = startPage + maxVisibleButtons - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxVisibleButtons + 1);
+    }
+
+    const buttons = [];
+
+    if (page > 1) {
+      buttons.push(
+        <button key="first" onClick={() => setPage(1)} className={styles.pageButton}>&laquo;</button>,
+        <button key="prev" onClick={() => setPage(page - 1)} className={styles.pageButton}>&lsaquo;</button>
+      );
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => setPage(i)}
+          className={`${styles.pageButton} ${page === i ? styles.activePage : ''}`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (page < totalPages) {
+      buttons.push(
+        <button key="next" onClick={() => setPage(page + 1)} className={styles.pageButton}>&rsaquo;</button>,
+        <button key="last" onClick={() => setPage(totalPages)} className={styles.pageButton}>&raquo;</button>
+      );
+    }
+
+    return buttons;
   };
 
   return (
@@ -119,22 +145,22 @@ export default function Products() {
       )}
 
       <div className={styles.productGrid}>
-        {products.map((product, idx) => {
-          const isLast = idx === products.length - 1;
-          return (
-            <div key={product.id} ref={isLast ? lastProductRef : null}>
-              <ProductCard product={product} onWishlistToggle={handleWishlistToggle} />
-            </div>
-          );
-        })}
+        {products.map(product => (
+          <div key={product.id}>
+            <ProductCard product={product} onWishlistToggle={handleWishlistToggle} />
+          </div>
+        ))}
       </div>
 
-      <div className={styles.paginationInfo}>Page: {page}</div>
-
-      {hasMore && (
-        <div className={styles.loaderContainer}>
-          <div className={styles.loader}></div>
+      <div className={styles.paginationWrapper}>
+        <span>Page: {page}</span>
+        <div className={styles.pageButtons}>
+          {renderPaginationButtons()}
         </div>
+      </div>
+
+      {products.length === 0 && (
+        <div className={styles.noResults}>No products found for "{searchTerm}"</div>
       )}
     </div>
   );
