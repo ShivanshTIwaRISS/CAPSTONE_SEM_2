@@ -11,7 +11,6 @@ export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
-
   useEffect(() => {
     if (!searchTerm.trim()) {
       setSuggestions([]);
