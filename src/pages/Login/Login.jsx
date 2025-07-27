@@ -17,7 +17,7 @@ export default function Login() {
       return;
     }
 
-    if (email === 'user@example.com' && password === 'password123') {
+    if (email === 'shivansh@tiwari.com' && password === '12345678') {
       localStorage.setItem('user', JSON.stringify({ email }));
       navigate('/');
     } else {
@@ -28,7 +28,6 @@ export default function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.logo}>
-        {/* Replace this src with your actual logo file if local */}
         <img src="/image.png" alt="OS Logo" />
       </div>
 

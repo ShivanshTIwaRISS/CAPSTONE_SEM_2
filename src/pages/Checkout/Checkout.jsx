@@ -52,7 +52,6 @@ export default function Checkout() {
     <div className={styles.checkoutContainer}>
       <h2>Checkout</h2>
       <div className={styles.checkoutGrid}>
-        {/* Address Section */}
         <div className={styles.section}>
           <h3>Shipping Address</h3>
           <input name="name" placeholder="Full Name" value={address.name} onChange={handleChange} />
@@ -61,7 +60,6 @@ export default function Checkout() {
           <input name="zip" placeholder="ZIP Code" value={address.zip} onChange={handleChange} />
         </div>
 
-        {/* Order Summary */}
         <div className={styles.section}>
           <h3>Order Summary</h3>
           {cartItems.map(item => (
@@ -70,14 +68,13 @@ export default function Checkout() {
               <div>
                 <p>{item.title}</p>
                 <p>Qty: {item.quantity}</p>
-                <p>₹{(item.price * item.quantity).toFixed(2)}</p>
+                <p>${(item.price * item.quantity).toFixed(2)}</p>
               </div>
             </div>
           ))}
-          <h4>Total: ₹{totalPrice.toFixed(2)}</h4>
+          <h4>Total: ${totalPrice.toFixed(2)}</h4>
         </div>
 
-        {/* Payment Section */}
         <div className={styles.section}>
           <h3>Payment Method</h3>
           <select value={paymentMethod} onChange={(e) => { setPaymentMethod(e.target.value); setConfirmCod(false); }}>
@@ -103,8 +100,6 @@ export default function Checkout() {
             <p className={styles.codConfirm}>✅ COD Confirmed. Ready to place the order.</p>
           )}
         </div>
-
-        {/* Place Order Button */}
         <div className={styles.section}>
           <button
             className={styles.placeOrderBtn}

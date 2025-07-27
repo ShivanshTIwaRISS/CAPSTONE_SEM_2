@@ -12,7 +12,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  // Debounced fetch of up to 2 suggestions
   useEffect(() => {
     if (!searchTerm.trim()) {
       setSuggestions([]);
@@ -38,7 +37,6 @@ export default function Navbar() {
     return () => clearTimeout(handle);
   }, [searchTerm]);
 
-  // When user selects a suggestion
   const handleSuggestionClick = (term) => {
     setSearchTerm('');
     setSuggestions([]);
@@ -46,7 +44,6 @@ export default function Navbar() {
     navigate(`/products?search=${encodeURIComponent(term)}`);
   };
 
-  // Full search on form submit
   const handleSearch = e => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -57,7 +54,6 @@ export default function Navbar() {
     }
   };
 
-  // Close dropdown if clicking outside
   useEffect(() => {
     const onClickOutside = e => {
       if (inputRef.current && !inputRef.current.contains(e.target)) {
@@ -106,11 +102,6 @@ export default function Navbar() {
         <div className={styles.navOption}>
           <span className={styles.lineOne}>Hello, Sign in</span>
           <Link to="/login" className={styles.lineTwo}>Account & Lists</Link>
-        </div>
-
-        <div className={styles.navOption}>
-          <span className={styles.lineOne}>Returns</span>
-          <Link to="/" className={styles.lineTwo}>& Orders</Link>
         </div>
 
         <div className={styles.cart}>

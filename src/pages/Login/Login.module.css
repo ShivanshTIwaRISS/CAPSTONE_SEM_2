@@ -115,3 +115,32 @@ input {
 .createAccountButton:hover {
   background-color: #d6d8db;
 }
+
+@media (max-width: 480px) {
+  .container,
+  .createAccountButton {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .logo img {
+    width: 80px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  label,
+  input,
+  .loginButton,
+  .conditions,
+  .help,
+  .newToAmazon {
+    font-size: 13px;
+  }
+
+  .createAccountButton {
+    font-size: 14px;
+  }
+}

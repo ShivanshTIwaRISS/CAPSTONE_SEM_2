@@ -35,7 +35,6 @@ export default function Home() {
     <>
 
       <div className={styles.container}>
-        {/* Hero */}
         <section className={styles.hero}>
           <div className={styles.heroContent}>
             <h1>Welcome to Our Store</h1>
@@ -45,8 +44,6 @@ export default function Home() {
             </Link>
           </div>
         </section>
-
-        {/* Category Filters */}
         <section className={styles.categoryFilters}>
           <div className={styles.categoryScroll}>
             {categories.map((cat) => (
@@ -60,11 +57,9 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        {/* Featured */}
         <section className={styles.featuredSection}>
           <h2>Featured Products</h2>
-          {loading && <p className={styles.loading}>Loading featured products...</p>}
+          {loading && <p className={styles.loading}>Loading products...</p>}
           {error && <p className={styles.error}>{error}</p>}
           <div className={styles.productsGrid}>
             {featuredProducts.map((product) => (
@@ -72,8 +67,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        {/* CTA */}
         <section className={styles.ctaSection}>
           <h2>Ready to Explore More?</h2>
           <Link to="/products" className={styles.secondaryButton}>

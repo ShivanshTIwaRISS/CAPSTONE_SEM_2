@@ -52,12 +52,16 @@ export default function Products() {
   }, [page, searchTerm, sortKey, wishlist]);
 
   useEffect(() => {
-    setPage(1); // Reset to page 1 when search or sort changes
+    setPage(1);
   }, [searchTerm, sortKey]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
 
   const handleSortChange = e => {
     setSortKey(e.target.value);

@@ -50,6 +50,10 @@
 .cartSummary {
   flex: 1;
   min-width: 250px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f3f3f3;
 }
 
 .summaryBox {
@@ -113,36 +117,7 @@
 .shopLink:hover {
   background-color: #0056b3;
 }
-.promoSection {
-  display: flex;
-  margin-top: 10px;
-  gap: 10px;
-}
 
-.promoInput {
-  padding: 8px;
-  flex: 1;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.applyBtn {
-  padding: 8px 12px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.discount {
-  color: green;
-}
-
-.estimatedTotal {
-  font-size: 18px;
-  margin-top: 8px;
-}
 .rightSection {
   display: flex;
   flex-direction: column;
@@ -157,36 +132,6 @@
   background-color: #fafafa;
 }
 
-.promoInputGroup {
-  display: flex;
-  margin-top: 0.5rem;
-}
-
-.promoInput {
-  flex: 1;
-  padding: 8px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px 0 0 6px;
-  outline: none;
-}
-
-.applyBtn {
-  padding: 8px 12px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.cartSummary {
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f3f3f3;
-}
 .promoCodeSection {
   margin-top: 1.5rem;
 }
@@ -224,4 +169,83 @@
 
 .applyBtn:hover {
   background-color: #218838;
+}
+
+.discount {
+  color: green;
+}
+
+.estimatedTotal {
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .cartContainer {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .cartItems,
+  .cartSummary,
+  .rightSection {
+    width: 100%;
+  }
+
+  .cartItem {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .productImage {
+    width: 100px;
+    height: 100px;
+  }
+
+  .removeBtn {
+    margin: 10px auto 0;
+  }
+
+  .rightSection {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartItem {
+    gap: 12px;
+    padding: 15px 0;
+  }
+
+  .productImage {
+    width: 90px;
+    height: 90px;
+  }
+
+  .promoInput {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .applyBtn {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .proceedBtn,
+  .clearBtn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .estimatedTotal {
+    font-size: 1rem;
+  }
+
+  .shopLink {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
 }

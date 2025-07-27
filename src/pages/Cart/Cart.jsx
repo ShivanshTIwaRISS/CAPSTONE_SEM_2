@@ -47,7 +47,6 @@ export default function Cart() {
       </div>
 
       <div className={styles.rightSection}>
-        {/* Promo Code Section */}
         <div className={styles.promoBox}>
           <h3>Have a Promo Code?</h3>
           <div className={styles.promoInputGroup}>
@@ -56,7 +55,6 @@ export default function Cart() {
           </div>
         </div>
 
-        {/* Summary Box */}
         <div className={styles.cartSummary}>
           <h3>Order Summary</h3>
           <p>Items: {totalItems}</p>

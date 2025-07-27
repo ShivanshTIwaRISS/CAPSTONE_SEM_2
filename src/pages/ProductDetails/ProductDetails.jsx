@@ -40,7 +40,7 @@ export default function ProductDetails() {
   };
 
   const handleBuyNow = () => {
-    clearCart(); // clear previous items (like Amazon behavior)
+    clearCart(); 
     addItemToCart({
       id: product.id,
       title: product.title,

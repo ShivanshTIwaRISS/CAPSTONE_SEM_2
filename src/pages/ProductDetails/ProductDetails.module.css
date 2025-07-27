@@ -116,20 +116,6 @@
   background-color: #f08804;
 }
 
-@media (max-width: 768px) {
-  .detailsGrid {
-    flex-direction: column;
-  }
-
-  .imageWrapper,
-  .info {
-    max-width: 100%;
-  }
-
-  .buttonGroup {
-    max-width: 100%;
-  }
-}
 .inStock {
   color: green;
   font-weight: 600;
@@ -149,4 +135,56 @@
   font-size: 0.95rem;
   margin-top: 6px;
   color: #555;
+}
+
+@media (max-width: 768px) {
+  .detailsGrid {
+    flex-direction: column;
+  }
+
+  .imageWrapper,
+  .info {
+    max-width: 100%;
+  }
+
+  .buttonGroup {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px 10px;
+  }
+
+  .info h1 {
+    font-size: 1.2rem;
+  }
+
+  .price {
+    font-size: 1.4rem;
+  }
+
+  .rating,
+  .description,
+  .returnPolicy,
+  .seller,
+  .secure,
+  .emi {
+    font-size: 0.85rem;
+  }
+
+  .addToCartBtn,
+  .buyNowBtn {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+
+  .buttonGroup {
+    margin-top: 15px;
+  }
+
+  .backLink {
+    font-size: 0.8rem;
+  }
 }
