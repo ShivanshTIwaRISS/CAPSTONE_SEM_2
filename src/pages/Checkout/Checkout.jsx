@@ -6,7 +6,6 @@ export default function Checkout() {
   const { cartItems, totalPrice, clearCart } = useCart();
   const [orderPlaced, setOrderPlaced] = useState(false);
 
-  // Address state
   const [address, setAddress] = useState({
     name: '',
     street: '',
@@ -14,19 +13,28 @@ export default function Checkout() {
     zip: '',
   });
 
-  // Handle change
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [cardDetails, setCardDetails] = useState({ number: '', expiry: '', cvv: '' });
+  const [upiId, setUpiId] = useState('');
+  const [confirmCod, setConfirmCod] = useState(false);
+
   const handleChange = (e) => {
-    setAddress({
-      ...address,
-      [e.target.name]: e.target.value,
-    });
+    setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
-  // Check if all fields are filled
   const isAddressValid = address.name && address.street && address.city && address.zip;
+  const isPaymentValid =
+    (paymentMethod === 'card' && cardDetails.number && cardDetails.expiry && cardDetails.cvv) ||
+    (paymentMethod === 'upi' && upiId) ||
+    paymentMethod === 'cod';
 
   const handlePlaceOrder = () => {
-    if (!isAddressValid) return;
+    if (!isAddressValid || !isPaymentValid) return;
+    if (paymentMethod === 'cod' && !confirmCod) {
+      alert('Please confirm your Cash on Delivery order.');
+      setConfirmCod(true);
+      return;
+    }
     setOrderPlaced(true);
     clearCart();
   };
@@ -44,38 +52,13 @@ export default function Checkout() {
     <div className={styles.checkoutContainer}>
       <h2>Checkout</h2>
       <div className={styles.checkoutGrid}>
-
-        {/* Address Form */}
+        {/* Address Section */}
         <div className={styles.section}>
           <h3>Shipping Address</h3>
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={address.name}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="street"
-            placeholder="Street Address"
-            value={address.street}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={address.city}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="zip"
-            placeholder="ZIP Code"
-            value={address.zip}
-            onChange={handleChange}
-          />
+          <input name="name" placeholder="Full Name" value={address.name} onChange={handleChange} />
+          <input name="street" placeholder="Street Address" value={address.street} onChange={handleChange} />
+          <input name="city" placeholder="City" value={address.city} onChange={handleChange} />
+          <input name="zip" placeholder="ZIP Code" value={address.zip} onChange={handleChange} />
         </div>
 
         {/* Order Summary */}
@@ -92,26 +75,48 @@ export default function Checkout() {
             </div>
           ))}
           <h4>Total: ₹{totalPrice.toFixed(2)}</h4>
+        </div>
 
-          <button
-            className={styles.placeOrderBtn}
-            onClick={handlePlaceOrder}
-            disabled={!isAddressValid}
-          >
-            Place Order
-          </button>
+        {/* Payment Section */}
+        <div className={styles.section}>
+          <h3>Payment Method</h3>
+          <select value={paymentMethod} onChange={(e) => { setPaymentMethod(e.target.value); setConfirmCod(false); }}>
+            <option value="">Select Payment Method</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="upi">UPI</option>
+            <option value="cod">Cash on Delivery</option>
+          </select>
 
-          {!isAddressValid && (
-            <p className={styles.warning}>Please fill all address fields to place the order.</p>
+          {paymentMethod === 'card' && (
+            <>
+              <input placeholder="Card Number" value={cardDetails.number} onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })} />
+              <input placeholder="Expiry Date (MM/YY)" value={cardDetails.expiry} onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })} />
+              <input placeholder="CVV" value={cardDetails.cvv} onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })} />
+            </>
+          )}
+
+          {paymentMethod === 'upi' && (
+            <input placeholder="Enter UPI ID" value={upiId} onChange={(e) => setUpiId(e.target.value)} />
+          )}
+
+          {paymentMethod === 'cod' && confirmCod && (
+            <p className={styles.codConfirm}>✅ COD Confirmed. Ready to place the order.</p>
           )}
         </div>
 
-        {/* Security Badges */}
+        {/* Place Order Button */}
         <div className={styles.section}>
-          <h3>🔒 Secure Checkout</h3>
-          <p>SSL secured • 100% Safe payments • Trusted platform</p>
+          <button
+            className={styles.placeOrderBtn}
+            onClick={handlePlaceOrder}
+            disabled={!isAddressValid || !isPaymentValid}
+          >
+            Place Order
+          </button>
+          {(!isAddressValid || !isPaymentValid) && (
+            <p className={styles.warning}>Please complete address and payment details to place the order.</p>
+          )}
         </div>
-
       </div>
     </div>
   );

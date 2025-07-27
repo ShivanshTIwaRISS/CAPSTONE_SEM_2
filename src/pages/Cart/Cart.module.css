@@ -113,3 +113,115 @@
 .shopLink:hover {
   background-color: #0056b3;
 }
+.promoSection {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.promoInput {
+  padding: 8px;
+  flex: 1;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.applyBtn {
+  padding: 8px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.discount {
+  color: green;
+}
+
+.estimatedTotal {
+  font-size: 18px;
+  margin-top: 8px;
+}
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 300px;
+}
+
+.promoBox {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.promoInputGroup {
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.promoInput {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px 0 0 6px;
+  outline: none;
+}
+
+.applyBtn {
+  padding: 8px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cartSummary {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f3f3f3;
+}
+.promoCodeSection {
+  margin-top: 1.5rem;
+}
+
+.promoCodeSection label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.promoInputGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promoInput {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.applyBtn {
+  padding: 0.4rem 0.8rem;
+  background-color: #28a745;
+  color: white;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.applyBtn:hover {
+  background-color: #218838;
+}

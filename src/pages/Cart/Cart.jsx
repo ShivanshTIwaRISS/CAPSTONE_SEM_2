@@ -46,10 +46,22 @@ export default function Cart() {
         ))}
       </div>
 
-      <div className={styles.cartSummary}>
-        <div className={styles.summaryBox}>
-          <p>Subtotal ({totalItems} items): <strong>${totalPrice.toFixed(2)}</strong></p>
-          
+      <div className={styles.rightSection}>
+        {/* Promo Code Section */}
+        <div className={styles.promoBox}>
+          <h3>Have a Promo Code?</h3>
+          <div className={styles.promoInputGroup}>
+            <input type="text" placeholder="Enter code" className={styles.promoInput} />
+            <button className={styles.applyBtn}>Apply</button>
+          </div>
+        </div>
+
+        {/* Summary Box */}
+        <div className={styles.cartSummary}>
+          <h3>Order Summary</h3>
+          <p>Items: {totalItems}</p>
+          <p>Total: <strong>${totalPrice.toFixed(2)}</strong></p>
+
           <Link to="/checkout" className={styles.proceedBtn}>
             Proceed to Checkout
           </Link>
