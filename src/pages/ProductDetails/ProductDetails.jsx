@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../../context/CartContext'; 
+import { useCart } from '../../context/CartContext';
+import { auth } from '../../firebase'; 
 import styles from './ProductDetails.module.css';
 
 export default function ProductDetails() {
@@ -14,7 +15,8 @@ export default function ProductDetails() {
   const { addItemToCart, clearCart } = useCart();
 
   useEffect(() => {
-    axios.get(`https://dummyjson.com/products/${id}`)
+    axios
+      .get(`https://dummyjson.com/products/${id}`)
       .then(res => {
         setProduct(res.data);
         setLoading(false);
@@ -40,13 +42,24 @@ export default function ProductDetails() {
   };
 
   const handleBuyNow = () => {
-    clearCart(); 
+    const user = auth.currentUser; 
+
+    if (!user) {
+      localStorage.setItem('redirectAfterLogin', '/checkout');
+      localStorage.setItem('buyNowProduct', JSON.stringify(product));
+
+      alert('You must log in to continue.');
+      navigate('/login');
+      return;
+    }
+    clearCart();
     addItemToCart({
       id: product.id,
       title: product.title,
       price: product.price,
       thumbnail: product.thumbnail,
     });
+
     navigate('/checkout');
   };
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import { auth, db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import styles from './Checkout.module.css';
 
 export default function Checkout() {
@@ -28,15 +30,35 @@ export default function Checkout() {
     (paymentMethod === 'upi' && upiId) ||
     paymentMethod === 'cod';
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!isAddressValid || !isPaymentValid) return;
     if (paymentMethod === 'cod' && !confirmCod) {
       alert('Please confirm your Cash on Delivery order.');
       setConfirmCod(true);
       return;
     }
-    setOrderPlaced(true);
-    clearCart();
+
+    try {
+      if (!auth.currentUser) {
+        alert("You must be logged in to place an order.");
+        return;
+      }
+
+      await addDoc(collection(db, 'orders'), {
+        userId: auth.currentUser.uid,
+        items: cartItems,
+        total: totalPrice,
+        address,
+        paymentMethod,
+        createdAt: serverTimestamp(),
+      });
+
+      setOrderPlaced(true);
+      clearCart();
+    } catch (error) {
+      console.error("Error saving order:", error);
+      alert("❌ Failed to place order. Please try again.");
+    }
   };
 
   if (orderPlaced) {
@@ -59,7 +81,6 @@ export default function Checkout() {
           <input name="city" placeholder="City" value={address.city} onChange={handleChange} />
           <input name="zip" placeholder="ZIP Code" value={address.zip} onChange={handleChange} />
         </div>
-
         <div className={styles.section}>
           <h3>Order Summary</h3>
           {cartItems.map(item => (
@@ -74,7 +95,6 @@ export default function Checkout() {
           ))}
           <h4>Total: ${totalPrice.toFixed(2)}</h4>
         </div>
-
         <div className={styles.section}>
           <h3>Payment Method</h3>
           <select value={paymentMethod} onChange={(e) => { setPaymentMethod(e.target.value); setConfirmCod(false); }}>

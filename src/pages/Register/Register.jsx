@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Register.module.css';
 import { useNavigate, Link } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -10,7 +12,7 @@ export default function Register() {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -24,12 +26,14 @@ export default function Register() {
       return;
     }
 
-    localStorage.setItem('user', JSON.stringify({ email }));
-    setSuccess(true);
-
-    setTimeout(() => {
-      navigate('/login');
-    }, 2000);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setSuccess(true);
+      setTimeout(() => navigate('/login'), 2000);
+    } catch (err) {
+      console.error('Firebase Registration Error:', err.code, err.message);
+      setError(err.message); 
+    }
   };
 
   if (success) {
@@ -81,7 +85,9 @@ export default function Register() {
             required
           />
 
-          <button type="submit" className={styles.registerButton}>Create your OS account</button>
+          <button type="submit" className={styles.registerButton}>
+            Create your OS account
+          </button>
 
           <p className={styles.conditions}>
             By creating an account, you agree to OS’s <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.

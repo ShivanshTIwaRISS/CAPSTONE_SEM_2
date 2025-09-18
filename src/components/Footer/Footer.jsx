@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -12,37 +13,37 @@ export default function Footer() {
         <div>
           <h4>Get to Know Us</h4>
           <ul>
-            <li>About OS</li>
-            <li>Careers</li>
-            <li>Press Releases</li>
-            <li>OS Devices</li>
+            <li><Link to="/info/about">About OS</Link></li>
+            <li><Link to="/info/careers">Careers</Link></li>
+            <li><Link to="/info/press">Press Releases</Link></li>
+            <li><Link to="/info/devices">OS Devices</Link></li>
           </ul>
         </div>
 
         <div>
           <h4>Connect with Us</h4>
           <ul>
-            <li>Facebook</li>
-            <li>Twitter</li>
-            <li>Instagram</li>
+            <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           </ul>
         </div>
 
         <div>
           <h4>Make Money with Us</h4>
           <ul>
-            <li>Sell on OS</li>
-            <li>Affiliate Program</li>
-            <li>Advertise Your Products</li>
+            <li><Link to="/info/sell">Sell on OS</Link></li>
+            <li><Link to="/info/affiliate">Affiliate Program</Link></li>
+            <li><Link to="/info/advertise">Advertise Your Products</Link></li>
           </ul>
         </div>
 
         <div>
           <h4>Let Us Help You</h4>
           <ul>
-            <li>Your Account</li>
-            <li>Returns Centre</li>
-            <li>Help</li>
+            <li><Link to="/info/account">Your Account</Link></li>
+            <li><Link to="/info/returns">Returns Centre</Link></li>
+            <li><Link to="/info/help">Help</Link></li>
           </ul>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import styles from './Cart.module.css';
 
@@ -13,6 +13,18 @@ export default function Cart() {
     totalItems,
     totalPrice,
   } = useCart();
+
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      alert('You must be logged in to proceed to checkout.');
+      navigate('/login');
+    } else {
+      navigate('/checkout');
+    }
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -59,10 +71,9 @@ export default function Cart() {
           <h3>Order Summary</h3>
           <p>Items: {totalItems}</p>
           <p>Total: <strong>${totalPrice.toFixed(2)}</strong></p>
-
-          <Link to="/checkout" className={styles.proceedBtn}>
+          <button onClick={handleCheckout} className={styles.proceedBtn}>
             Proceed to Checkout
-          </Link>
+          </button>
 
           <button onClick={clearCart} className={styles.clearBtn}>Clear Cart</button>
         </div>

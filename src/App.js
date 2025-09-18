@@ -11,6 +11,8 @@ import Cart from './pages/Cart/Cart';
 import { CartProvider } from './context/CartContext';
 import './App.css'; 
 import Checkout from './pages/Checkout/Checkout';
+import GenericInfoPage from "./pages/GenericInfoPage/GenericInfoPage";
+import OrderHistory from "./pages/OrderHistory/OrderHistory"
 
 export default function App() {
   return (
@@ -27,6 +29,8 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/info/:page" element={<GenericInfoPage />} />
+              <Route path="/orders" element={<OrderHistory />} />
             </Routes>
           </main>
           <Footer />
