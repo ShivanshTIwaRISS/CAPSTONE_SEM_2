@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import styles from './Cart.module.css';
+import { auth } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Cart() {
   const {
@@ -15,10 +17,17 @@ export default function Cart() {
   } = useCart();
 
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleCheckout = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
+    if (!currentUser) {
       alert('You must be logged in to proceed to checkout.');
       navigate('/login');
     } else {
@@ -81,4 +90,3 @@ export default function Cart() {
     </div>
   );
 }
-
