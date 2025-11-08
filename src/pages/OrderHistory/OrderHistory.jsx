@@ -9,14 +9,11 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    // ✅ Wait for Firebase Auth state (works on refresh too)
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (!user) {
         setOrders([]);
@@ -24,21 +21,44 @@ export default function OrderHistory() {
         return;
       }
 
-      // ✅ Query Firestore with correct ordering
-      const q = query(
+      // ✅ Main ORDER BY query
+      const sortedQuery = query(
         collection(db, "orders"),
         where("userId", "==", user.uid),
         orderBy("createdAt", "desc")
       );
 
-      // ✅ Real-time listener
-      const unsubscribeSnapshot = onSnapshot(q, (snapshot) => {
-        const fetchedOrders = snapshot.docs.map((doc) => ({
+      const unsubscribeSnapshot = onSnapshot(sortedQuery, (snapshot) => {
+        const sortedOrders = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setOrders(fetchedOrders);
-        setLoading(false);
+
+        // ✅ If sorted query returns no docs → fallback query
+        if (sortedOrders.length === 0) {
+          const fallbackQuery = query(
+            collection(db, "orders"),
+            where("userId", "==", user.uid)
+          );
+
+          onSnapshot(fallbackQuery, (fallbackSnap) => {
+            let fallbackOrders = fallbackSnap.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+
+            // ✅ Sort manually by date (desc)
+            fallbackOrders.sort((a, b) =>
+              (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0)
+            );
+
+            setOrders(fallbackOrders);
+            setLoading(false);
+          });
+        } else {
+          setOrders(sortedOrders);
+          setLoading(false);
+        }
       });
 
       return () => unsubscribeSnapshot();
