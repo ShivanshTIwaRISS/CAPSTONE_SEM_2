@@ -168,3 +168,15 @@ input:focus {
     font-size: 14px;
   }
 }
+.fakeLink {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+}
+.fakeLink:hover {
+  opacity: 0.8;
+}

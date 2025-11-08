@@ -25,7 +25,7 @@ export default function Login() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // ✅ Save user in localStorage (Fix for Vercel login check)
+      // ✅ Store user in localStorage so Cart recognizes login on Vercel
       localStorage.setItem("user", JSON.stringify({
         uid: user.uid,
         email: user.email,
@@ -97,13 +97,15 @@ export default function Login() {
             Continue
           </button>
 
+          {/* ✅ Replaced invalid <a href="#"> links */}
           <p className={styles.conditions}>
-            By continuing, you agree to OS’s <a href="#">Terms</a> and{" "}
-            <a href="#">Privacy Policy</a>.
+            By continuing, you agree to OS’s{" "}
+            <button type="button" className={styles.fakeLink}>Terms</button> and{" "}
+            <button type="button" className={styles.fakeLink}>Privacy Policy</button>.
           </p>
 
           <p className={styles.help}>
-            <a href="#">Need help?</a>
+            <button type="button" className={styles.fakeLink}>Need help?</button>
           </p>
         </form>
       </div>
