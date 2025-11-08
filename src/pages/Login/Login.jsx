@@ -22,7 +22,15 @@ export default function Login() {
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // ✅ Save user in localStorage (Fix for Vercel login check)
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+      }));
+
       const redirectPath = localStorage.getItem("redirectAfterLogin");
       const buyNowProduct = localStorage.getItem("buyNowProduct");
 
