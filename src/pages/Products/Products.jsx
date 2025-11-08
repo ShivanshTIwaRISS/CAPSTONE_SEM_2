@@ -6,7 +6,6 @@ import styles from './Products.module.css';
 
 export default function Products() {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState(() => {
@@ -19,7 +18,9 @@ export default function Products() {
 
   const PRODUCTS_PER_PAGE = 20;
 
+  // ✅ Fixed: queryParams moved inside effect to avoid ESLint CI build error
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
     const term = queryParams.get('search') || '';
     setSearchTerm(term);
   }, [location.search]);

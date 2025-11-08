@@ -89,8 +89,11 @@ export default function Register() {
             Create your OS account
           </button>
 
+          {/* ✅ Fixed links */}
           <p className={styles.conditions}>
-            By creating an account, you agree to OS’s <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+            By creating an account, you agree to OS’s{" "}
+            <button type="button" className={styles.fakeLink}>Terms</button> and{" "}
+            <button type="button" className={styles.fakeLink}>Privacy Policy</button>.
           </p>
 
           <p className={styles.loginLink}>
