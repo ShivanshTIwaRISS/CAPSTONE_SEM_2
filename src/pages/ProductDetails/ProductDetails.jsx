@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { auth } from '../../firebase'; 
@@ -15,19 +15,17 @@ export default function ProductDetails() {
   const { addItemToCart, clearCart } = useCart();
 
   useEffect(() => {
-    fetchProducts();
-  }, [id]);
-      const fetchProducts = async() => {
-      try{
-        const res = await fetch(`https://dummyjson.com/products/${id}`);
-        const data = await res.json();
+    fetch(`https://dummyjson.com/products/${id}`)
+      .then(res => res.json())
+      .then(data => {
         setProduct(data);
         setLoading(false);
-      } catch(err){
+      })
+      .catch(() => {
         setError('Failed to load product details');
         setLoading(false);
-      }
-    }
+      });
+  }, [id]);
 
   if (loading) return <p className={styles.loading}>Loading product details...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
