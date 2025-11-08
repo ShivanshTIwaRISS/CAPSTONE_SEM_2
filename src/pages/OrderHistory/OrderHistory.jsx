@@ -15,7 +15,7 @@ export default function OrderHistory() {
 
   useEffect(() => {
 
-    // ✅ Wait for Firebase to restore login session
+    // ✅ Wait for Firebase Auth state (works on refresh too)
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (!user) {
         setOrders([]);
@@ -23,13 +23,14 @@ export default function OrderHistory() {
         return;
       }
 
-      // ✅ Query orders AFTER user is confirmed
+      // ✅ Query Firestore with correct ordering
       const q = query(
         collection(db, "orders"),
         where("userId", "==", user.uid),
         orderBy("createdAt", "desc")
       );
 
+      // ✅ Real-time listener
       const unsubscribeSnapshot = onSnapshot(q, (snapshot) => {
         const fetchedOrders = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -45,37 +46,39 @@ export default function OrderHistory() {
     return () => unsubscribeAuth();
   }, []);
 
-  if (loading) return <p style={{ textAlign: "center" }}>Loading orders...</p>;
+  if (loading) return <p style={{ textAlign: "center", marginTop: "40px" }}>Loading orders...</p>;
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>📦 Your Orders</h2>
+    <div style={{ maxWidth: "650px", margin: "40px auto", padding: "20px" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "25px" }}>📦 Your Orders</h2>
 
       {orders.length === 0 ? (
-        <p style={{ textAlign: "center" }}>No orders found.</p>
+        <p style={{ textAlign: "center", marginTop: "50px", fontSize: "18px" }}>
+          You haven't placed any orders yet.
+        </p>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
           {orders.map((order) => (
             <div
               key={order.id}
               style={{
                 border: "1px solid #ddd",
                 borderRadius: "10px",
-                padding: "15px 20px",
-                boxShadow: "0 3px 8px rgba(0,0,0,0.08)",
+                padding: "16px 20px",
                 background: "#fff",
+                boxShadow: "0px 4px 10px rgba(0,0,0,0.06)",
               }}
             >
               <p><strong>Order ID:</strong> {order.id}</p>
-              <p><strong>Total:</strong> ${order.total}</p>
-              <p><strong>Date:</strong> {order.createdAt?.toDate().toLocaleString() || "--"}</p>
+              <p><strong>Total:</strong> ${order.total?.toFixed(2)}</p>
+              <p><strong>Date:</strong> {order.createdAt?.toDate().toLocaleString()}</p>
 
-              <div style={{ marginTop: "10px" }}>
+              <div style={{ marginTop: "12px" }}>
                 <strong>Items:</strong>
-                <ul style={{ paddingLeft: "20px", marginTop: "5px" }}>
+                <ul style={{ marginTop: "6px", paddingLeft: "20px" }}>
                   {order.items.map((item, index) => (
                     <li key={index}>
-                      {item.title} (x{item.quantity}) - ${item.price}
+                      {item.title} (x{item.quantity}) — ${item.price}
                     </li>
                   ))}
                 </ul>
