@@ -15,17 +15,19 @@ export default function ProductDetails() {
   const { addItemToCart, clearCart } = useCart();
 
   useEffect(() => {
-    axios
-      .get(`https://dummyjson.com/products/${id}`)
-      .then(res => {
-        setProduct(res.data);
+    fetchProducts();
+  }, [id]);
+      const fetchProducts = async() => {
+      try{
+        const res = await fetch(`https://dummyjson.com/products/${id}`);
+        const data = await res.json();
+        setProduct(data);
         setLoading(false);
-      })
-      .catch(() => {
+      } catch(err){
         setError('Failed to load product details');
         setLoading(false);
-      });
-  }, [id]);
+      }
+    }
 
   if (loading) return <p className={styles.loading}>Loading product details...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
