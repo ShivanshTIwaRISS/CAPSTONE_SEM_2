@@ -14,28 +14,68 @@ export default function OrderHistory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
+        console.log("❌ No user logged in");
         setOrders([]);
         setLoading(false);
         return;
       }
 
-      // ✅ Main ORDER BY query
+      console.log("✅ Logged in UID:", user.uid);
+
       const sortedQuery = query(
         collection(db, "orders"),
         where("userId", "==", user.uid),
         orderBy("createdAt", "desc")
       );
 
-      const unsubscribeSnapshot = onSnapshot(sortedQuery, (snapshot) => {
-        const sortedOrders = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+      const unsubscribeSorted = onSnapshot(
+        sortedQuery,
+        (snapshot) => {
+          console.log("✅ Sorted snapshot size:", snapshot.size);
 
-        // ✅ If sorted query returns no docs → fallback query
-        if (sortedOrders.length === 0) {
+          const sortedOrders = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          if (sortedOrders.length > 0) {
+            console.log("✅ Using Sorted Orders:", sortedOrders);
+            setOrders(sortedOrders);
+            setLoading(false);
+          } else {
+            console.log("⚠️ Sorted query empty → fallback");
+
+            const fallbackQuery = query(
+              collection(db, "orders"),
+              where("userId", "==", user.uid)
+            );
+
+            onSnapshot(fallbackQuery, (fallbackSnap) => {
+              console.log("✅ Fallback snapshot size:", fallbackSnap.size);
+
+              let fallbackOrders = fallbackSnap.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              }));
+
+              // Manual sorting
+              fallbackOrders.sort((a, b) =>
+                (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0)
+              );
+
+              console.log("✅ Fallback Orders:", fallbackOrders);
+
+              setOrders(fallbackOrders);
+              setLoading(false);
+            });
+          }
+        },
+        (error) => {
+          console.log("❌ Firestore Error:", error.message);
+
+          // If index missing → fallback automatically
           const fallbackQuery = query(
             collection(db, "orders"),
             where("userId", "==", user.uid)
@@ -47,27 +87,23 @@ export default function OrderHistory() {
               ...doc.data(),
             }));
 
-            // ✅ Sort manually by date (desc)
             fallbackOrders.sort((a, b) =>
               (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0)
             );
-
             setOrders(fallbackOrders);
             setLoading(false);
           });
-        } else {
-          setOrders(sortedOrders);
-          setLoading(false);
         }
-      });
+      );
 
-      return () => unsubscribeSnapshot();
+      return () => unsubscribeSorted();
     });
 
-    return () => unsubscribeAuth();
+    return () => unsubscribe();
   }, []);
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: "40px" }}>Loading orders...</p>;
+  if (loading)
+    return <p style={{ textAlign: "center", marginTop: "40px" }}>Loading orders...</p>;
 
   return (
     <div style={{ maxWidth: "650px", margin: "40px auto", padding: "20px" }}>
